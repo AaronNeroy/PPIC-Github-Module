@@ -1,1 +1,30 @@
-sdvb
+name: Collaborative Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update_html_and_readme:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Step 2: Update index.html
+      - name: Update index.html
+      # Check if the GitHub actor is the Team Leader
+        run: |
+          if [ "${{ github.actor }}" == "AaronNeroy" ]; then
+            sed -i '/<\/body>/i <p>Updated by Leader on '"$(date)"'</p>' index.html
+          fi
+          
+          if [ "${{ github.actor }}" == "AaronNeroy" ]; then
+            sed -i '/<\/body>/i <p>Updated by Member 1 on '"$(date)"'</p>' index.html
+          fi
+
+          if [ "${{ github.actor }}" == "AaronNeroy" ]; then
+            sed -i '/<\/body>/i <p>Updated by Member 2 on '"$(date)"'</p>' index.html
+          fi
