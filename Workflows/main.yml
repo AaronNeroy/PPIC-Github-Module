@@ -17,14 +17,14 @@ jobs:
       - name: Update index.html
       # Check if the GitHub actor is the Team Leader
         run: |
-          if [ "${{ github.actor }}" == "Leader" ]; then
+          if [ "${{ github.actor }}" == "AaronNeroy" ]; then
             sed -i '/<\/body>/i <p>Updated by Leader on '"$(date)"'</p>' index.html
           fi
           
-          if [ "${{ github.actor }}" == "Member1" ]; then
+          if [ "${{ github.actor }}" == "AaronNeroy" ]; then
             sed -i '/<\/body>/i <p>Updated by Member 1 on '"$(date)"'</p>' index.html
           fi
 
-          if [ "${{ github.actor }}" == "Member2" ]; then
+          if [ "${{ github.actor }}" == "AaronNeroy" ]; then
             sed -i '/<\/body>/i <p>Updated by Member 2 on '"$(date)"'</p>' index.html
           fi
