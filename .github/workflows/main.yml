@@ -28,3 +28,10 @@ jobs:
           if [ "${{ github.actor }}" == "AaronNeroy" ]; then
             sed -i '/<\/body>/i <p>Updated by Member 2 on '"$(date)"'</p>' index.html
           fi
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions"
+          git add index.html
+          git commit -m "Workflow updated index.html" || echo "No changes to commit"
+          git push
