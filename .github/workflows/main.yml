@@ -29,9 +29,16 @@ jobs:
             sed -i '/<\/body>/i <p>Updated by Member 2 on '"$(date)"'</p>' index.html
           fi
 
+      # Step 3: Updating the README file
+      - name: Update README
+        run: |
+          echo "### Updated by ${{ github.actor }} on $(date '+%Y-%m-%d %H:%M:%S') [Commit: $(git rev-parse --short HEAD)]" >> README.md
+
+
+      
       - name: Commit changes
         run: |
           git config user.name "github-actions"
           git add index.html
-          git commit -m "Workflow updated index.html" || echo "No changes to commit"
+          git commit -m "Workflow updated, README.md and index.html files changed" || echo "No changes to commit"
           git push
