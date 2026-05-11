@@ -15,30 +15,35 @@ jobs:
 
       # Step 2: Update index.html
       - name: Update index.html
-      # Check if the GitHub actor is the Leader, Member 1 or Member 2
         run: |
           if git log -1 | grep -q "Leader"; then
             sed -i '/<\/body>/i <p>Updated by Leader on '"$(date)"'</p>' index.html
           fi
-
           if git log -1 | grep -q "Member 1"; then
             sed -i '/<\/body>/i <p>Updated by Member 1 on '"$(date)"'</p>' index.html
           fi
-
           if git log -1 | grep -q "Member 2"; then
             sed -i '/<\/body>/i <p>Updated by Member 2 on '"$(date)"'</p>' index.html
           fi
 
-      # Step 3: Updating the README file
+      # Step 3: Fix README encoding through Overwrite
+      - name: Fix README encoding
+        run: |
+          echo "# Team Project" > README.md
+          echo "" >> README.md
+          echo "This is our collaborative GitHub Actions project." >> README.md
+          echo "" >> README.md
+
+      # Step 4: Update README
       - name: Update README
         run: |
-          printf "### Updated by ${{ github.actor }} on $(date '+%Y-%m-%d %H:%M:%S') [Commit: $(git rev-parse --short HEAD)]" >> README.md
+          echo "### Updated by ${{ github.actor }} on $(date '+%Y-%m-%d %H:%M:%S') [Commit: $(git rev-parse --short HEAD)]" >> README.md
 
-
-      
+      # Step 5: Commit changes
       - name: Commit changes
         run: |
           git config user.name "github-actions"
+          git config user.email "actions@github.com"
           git add index.html README.md
           git commit -m "Workflow updated, README.md and index.html files changed" || echo "No changes to commit"
           git push
